@@ -14,7 +14,7 @@ const assert = require('assert');
   const isCI = process.env.CI === 'true';
   console.log('🚀 Launching browser with extension...');
   const context = await chromium.launchPersistentContext(userDataDir, {
-    headless: isCI,
+    headless: false,
     args: [
       `--disable-extensions-except=${extensionPath}`,
       `--load-extension=${extensionPath}`,

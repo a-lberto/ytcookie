@@ -25,4 +25,6 @@ jobs:
         run: npx playwright install chromium --with-deps
         
       - name: Run tests
-        run: npm test
+        env:
+          CI: true
+        run: xvfb-run node tests/test.js
