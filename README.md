@@ -1,7 +1,8 @@
-# 🍪 YT Cookie Extractor
+# ▶🍪⬇ YouTube Cookie Downloader
 
 [![GitHub Release](https://img.shields.io/github/v/release/a-lberto/ytcookie?style=flat-square)](https://github.com/a-lberto/ytcookie/releases)
-[![Package Extension](https://github.com/a-lberto/ytcookie/actions/workflows/package.yml/badge.svg)](https://github.com/a-lberto/ytcookie/actions/workflows/package.yml)
+[![Tests](https://github.com/a-lberto/ytcookie/actions/workflows/test.yml/badge.svg)](https://github.com/a-lberto/ytcookie/actions/workflows/test.yml)
+[![Package](https://github.com/a-lberto/ytcookie/actions/workflows/package.yml/badge.svg)](https://github.com/a-lberto/ytcookie/actions/workflows/package.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 [![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue?logo=google-chrome&logoColor=white&style=flat-square)](https://chrome.google.com/webstore/detail/...)
 [![Firefox Add-ons](https://img.shields.io/badge/Firefox-Add--ons-orange?logo=firefox-browser&logoColor=white&style=flat-square)](https://addons.mozilla.org/en-US/firefox/addon/...)
