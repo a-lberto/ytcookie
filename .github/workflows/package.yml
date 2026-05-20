@@ -65,7 +65,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/firefox/*.zip
+            artifacts/firefox/*.xpi
             artifacts/chrome/*.zip
           generate_release_notes: true
           draft: false
