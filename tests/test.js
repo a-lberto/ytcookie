@@ -59,7 +59,8 @@ const assert = require('assert');
 
     // 2. Prepare mock cookies
     console.log('🍪 Setting mock cookies...');
-    const ytPage = await context.newPage();
+    const pages = context.pages();
+    const ytPage = pages.length > 0 ? pages[0] : await context.newPage();
     await ytPage.goto('https://www.youtube.com');
     await context.addCookies([{
         name: 'YT_TEST',
