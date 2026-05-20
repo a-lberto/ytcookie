@@ -10,8 +10,7 @@ const assert = require('assert');
 
   if (fs.existsSync(userDataDir)) fs.rmSync(userDataDir, { recursive: true, force: true });
   if (fs.existsSync(downloadPath)) fs.rmSync(downloadPath, { recursive: true, force: true });
-  if (!fs.existsSync(downloadPath)) fs.mkdirSync(downloadPath);
-
+  if (!fs.existsSync(downloadPath)) fs.mkdirSync(downloadPath, { recursive: true });
   const isCI = process.env.CI === 'true';
   console.log('🚀 Launching browser with extension...');
   const context = await chromium.launchPersistentContext(userDataDir, {
