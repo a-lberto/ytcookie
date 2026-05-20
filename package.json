@@ -1,6 +1,6 @@
 {
   "name": "ytcookie-tests",
-  "version": "1.0.0",
+  "version": "0.1.0-draft",
   "scripts": {
     "test": "node tests/test.js"
   },
