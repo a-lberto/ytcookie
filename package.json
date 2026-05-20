@@ -1,8 +1,10 @@
 {
-  "dependencies": {
-    "playwright": "^1.60.0"
+  "name": "ytcookie-tests",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "node tests/test.js"
   },
-  "devDependencies": {
-    "web-ext": "^10.1.0"
+  "dependencies": {
+    "playwright": "^1.44.0"
   }
 }
