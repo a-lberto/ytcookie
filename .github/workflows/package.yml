@@ -30,10 +30,12 @@ jobs:
       - name: Get version
         id: get_version
         run: echo "version=$(node -p "require('./manifest.json').version")" >> $GITHUB_OUTPUT
-
+      
       - name: Package for Firefox (Desktop & Android)
         run: |
           npx web-ext build --source-dir . --artifacts-dir dist/firefox --overwrite-dest
+          # Convert the generated .zip into a .xpi
+          mv dist/firefox/*.zip dist/firefox/ytcookie-firefox-v${{ steps.get_version.outputs.version }}.xpi
 
       - name: Package for Chrome
         run: |
@@ -63,7 +65,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/firefox/*.xpi
+            artifacts/firefox/*.zip
             artifacts/chrome/*.zip
           generate_release_notes: true
           draft: false
