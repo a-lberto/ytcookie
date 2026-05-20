@@ -1,0 +1,128 @@
+name: Build & Release Extension
+
+on:
+  push:
+    branches: [ master ]
+  release:
+    types: [ created ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run Tests
+        env:
+          CI: true
+        run: xvfb-run node tests/test.js
+
+  build:
+    name: Package Store-Ready Artifacts
+    needs: test
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Get Version
+        id: get_version
+        run: echo "version=$(node -p "require('./manifest.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Run Manifest Isolation and Build Prep
+        run: node scripts/build.js
+
+      - name: Package for Chrome (Google Play & Web Store Ready)
+        run: |
+          cd dist/chrome-build
+          zip -r ../ytcookie-chrome-v${{ steps.get_version.outputs.version }}.zip .
+
+      - name: Package for Firefox (Mozilla AMO Ready)
+        run: |
+          npx web-ext build --source-dir dist/firefox-build --artifacts-dir dist --overwrite-dest
+          # Find web-ext generated zip and create the final xpi and zip packages
+          mv dist/yt_cookie_extractor-*.zip dist/ytcookie-firefox-v${{ steps.get_version.outputs.version }}.zip
+          cp dist/ytcookie-firefox-v${{ steps.get_version.outputs.version }}.zip dist/ytcookie-firefox-v${{ steps.get_version.outputs.version }}.xpi
+
+      - name: Upload Packaged Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-packages
+          path: |
+            dist/*.zip
+            dist/*.xpi
+
+  publish:
+    name: Publish Releases & Dev Drafts
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download Built Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: extension-packages
+          path: dist
+
+      - name: Publish Draft Dev Build (On Push to Master)
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🚀 Publishing rolling draft build for dev..."
+          
+          # Delete any existing draft release & remote tag for dev-build
+          gh release delete dev-build --yes || true
+          git push origin :refs/tags/dev-build || true
+          
+          # Create rolling dev-build draft release and upload assets
+          gh release create dev-build \
+            dist/ytcookie-chrome-v${{ needs.build.outputs.version }}.zip \
+            dist/ytcookie-firefox-v${{ needs.build.outputs.version }}.zip \
+            dist/ytcookie-firefox-v${{ needs.build.outputs.version }}.xpi \
+            --draft \
+            --title "Latest Dev Build" \
+            --notes "Latest draft build compiled automatically from master branch commit ${GITHUB_SHA:0:7} after all tests successfully passed."
+
+      - name: Publish Official Release Assets (On Release Created)
+        if: github.event_name == 'release'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🚀 Uploading assets to official release: ${{ github.event.release.tag_name }}"
+          
+          gh release upload ${{ github.event.release.tag_name }} \
+            dist/ytcookie-chrome-v${{ needs.build.outputs.version }}.zip \
+            dist/ytcookie-firefox-v${{ needs.build.outputs.version }}.zip \
+            dist/ytcookie-firefox-v${{ needs.build.outputs.version }}.xpi \
+            --clobber
