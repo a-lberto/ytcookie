@@ -2,12 +2,18 @@
   "name": "ytcookie-tests",
   "version": "0.1.0-draft",
   "scripts": {
-    "test": "node tests/test.js"
+    "test": "node tests/test.js",
+    "prepare": "husky",
+    "release": "standard-version"
   },
   "dependencies": {
     "playwright": "^1.44.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
+    "husky": "^9.1.7",
+    "standard-version": "^9.5.0",
     "web-ext": "^10.1.0"
   }
 }
