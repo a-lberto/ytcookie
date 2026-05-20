@@ -66,8 +66,7 @@ jobs:
       - name: Package for Firefox (Mozilla AMO Ready)
         run: |
           npx web-ext build --source-dir dist/firefox-build --artifacts-dir dist --overwrite-dest
-          # Find web-ext generated zip and create the final xpi and zip packages
-          mv dist/yt_cookie_extractor-*.zip dist/ytcookie-firefox-v${{ steps.get_version.outputs.version }}.zip
+          mv dist/youtube_cookie_downloader-*.zip dist/ytcookie-firefox-v${{ steps.get_version.outputs.version }}.zip
           cp dist/ytcookie-firefox-v${{ steps.get_version.outputs.version }}.zip dist/ytcookie-firefox-v${{ steps.get_version.outputs.version }}.xpi
 
       - name: Upload Packaged Artifacts

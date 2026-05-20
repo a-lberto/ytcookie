@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "YT Cookie Extractor",
+  "name": "YouTube Cookie Downloader",
   "version": "0.1",
   "version_name": "0.1 draft",
   "description": "Extracts YouTube cookies to a Netscape formatted text file.",
