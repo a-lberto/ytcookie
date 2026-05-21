@@ -1,11 +1,8 @@
 # ▶🍪⬇ YouTube Cookie Downloader
 
 [![GitHub Release](https://img.shields.io/github/v/release/a-lberto/ytcookie?style=flat-square)](https://github.com/a-lberto/ytcookie/releases)
-[![Tests](https://github.com/a-lberto/ytcookie/actions/workflows/test.yml/badge.svg)](https://github.com/a-lberto/ytcookie/actions/workflows/test.yml)
-[![Package](https://github.com/a-lberto/ytcookie/actions/workflows/package.yml/badge.svg)](https://github.com/a-lberto/ytcookie/actions/workflows/package.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
-[![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue?logo=google-chrome&logoColor=white&style=flat-square)](https://chrome.google.com/webstore/detail/...)
-[![Firefox Add-ons](https://img.shields.io/badge/Firefox-Add--ons-orange?logo=firefox-browser&logoColor=white&style=flat-square)](https://addons.mozilla.org/en-US/firefox/addon/...)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome-Web%20Store-blue?logo=google-chrome&logoColor=white&style=flat-square)](https://chrome.google.com/webstore/detail/youtube-cookie-downloader)
+[![Firefox Add-ons](https://img.shields.io/badge/Firefox-Add--ons-orange?logo=firefox-browser&logoColor=white&style=flat-square)](https://addons.mozilla.org/en-US/firefox/addon/youtube-cookie-downloader)
 
 A lightweight, modern browser extension to extract your YouTube cookies into a Netscape-formatted text file. Perfect for use with tools like `yt-dlp`, `curl`, and `wget`.
 
